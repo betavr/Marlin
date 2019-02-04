@@ -1,0 +1,45 @@
+There are pre setup configurations files for the A10-A20+ and other variants in the other configuration folder replace the configuration.h in the marlin folder with the one you need. 
+once the configuration you want is in place open marlin.ino in the latest arduino ide and run a verify first then in tools check that your printer port is selected. 
+for the flash process be sure to close any other program that controls the printer failure to do so can brick the printer. 
+then click upload it will compile again then avrdude should show a loading bar once avrdude says thankyou flashing is complete.
+now from the lcd in commands clean eeprom.
+
+links:
+YouTube channel: https://www.youtube.com/channel/UCKjXi59_s2qrLEp46v2XOhw - don't forget to subscribe
+Website: https://creationcorner.000webhostapp.com/ - hosting my print gallery here
+Discord: https://discord.gg/yCuzAzT - come join us chat n exchange info and print photos ect ^^
+Geeetech Forum: http://www.geeetech.com/forum/viewtopic.php?f=98&t=61991
+PayPal : https://www.paypal.me/vertabreaker
+If you like what i do and would like to help support what i do you can tip me by PayPal. :D
+
+Disclaimer: Use at your own risk i take no responsibility for anything.
+There is a risk in flashing firmware to the board if anything interrupts it will brick the board.
+(((Marlin 2.0 is not released its still beta some features are not complete.)))
+bugs should be reported to marlin directly (The things i cant fix)
+
+Known Issues:
+Multi material - no mix menu, multi colour models have to be designed.
+power loss resume - broken
+UBL - has crashing issue.
+
+To keep things simpler there is one download that has "other config's" you can copy paste in.
+the default config is the one for my test machine.
+supported models: A10+m+bltouch+tmc2208 A20+m+bltouch+tmc2208
+Running Pid autotune is suggested you may trigger runaway if you don't.
+Calibrating your steps is suggested it can vary machine to machine.
+http://marlinfw.org/tools/lin_advance/k-factor.html to calibrate lin_adv
+Be sure to clean the EEPROM after every flash to correct the crc mismatch.
+Newest versions will be placed here keep an eye on build#.
+The source for this firmware came direct from the marlin GitHub i setup and tested .
+GT2560 V3 & GT2560 Rev B work with the firmware but you may need to turn off the filament sensor in the menu.
+Compiled with arduino IDE 1.8.8 older may not work.
+U8glib is a required dependency library for a20 & a20m 
+Throw all of your expectations from V1 out the window V2 is less and less like stock every Build.
+
+Build Tags
+Nightly - untested daily build
+Stable - fully tested build
+Bare Bone - only basic functionality
+Redux - much like Bare Bone but with a few features
+
+Backup Download Repo: http://www.mediafire.com/folder/39hoc6o4qhkk1/3d_printing
