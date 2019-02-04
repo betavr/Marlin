@@ -20,9 +20,9 @@
  *
  */
 
-/**
+/*****************************************************************
  * GT2560 V3.0 pin assignment
- */
+ ******************************************************************/
 
 #if !defined(__AVR_ATmega1280__) && !defined(__AVR_ATmega2560__)
   #error "Oops! Select 'Arduino/Genuino Mega or Mega 2560' in 'Tools > Board.'"
@@ -35,15 +35,15 @@
 //
 // Servos
 //
-#define SERVO0_PIN         11   //13 untested  3Dtouch
+#define SERVO0_PIN         11   // 13 untested  3Dtouch
 
 //
 // Limit Switches
 //
-#define X_MIN_PIN          24
-#define X_MAX_PIN          22
-#define Y_MIN_PIN          28
-#define Y_MAX_PIN          26
+#define X_MIN_PIN          24   //22
+#define X_MAX_PIN          22   //24
+#define Y_MIN_PIN          28   //26
+#define Y_MAX_PIN          26   //28
 #define Z_MIN_PIN          30
 #define Z_MAX_PIN          32
 
@@ -61,13 +61,13 @@
 // Power Recovery
 //
 #define POWER_LOSS_PIN     69   // Pin to detect power loss
-#define POWER_LOSS_STATE   LOW
+#define CONTINUITY_STATE   LOW
 
 //
 // Z Probe (when not Z_MIN_PIN)
 //
 #ifndef Z_MIN_PROBE_PIN
-  #define Z_MIN_PROBE_PIN  32
+  #define Z_MIN_PROBE_PIN  30
 #endif
 
 //
@@ -85,9 +85,9 @@
 #define Z_DIR_PIN          23
 #define Z_ENABLE_PIN       27
 
-#define E0_STEP_PIN        46
-#define E0_DIR_PIN         44
-#define E0_ENABLE_PIN      12
+#define E0_STEP_PIN        46   //43
+#define E0_DIR_PIN         44   //45
+#define E0_ENABLE_PIN      12   //41
 
 #define E1_STEP_PIN        49
 #define E1_DIR_PIN         47
@@ -96,18 +96,19 @@
 //
 // Temperature Sensors
 //
-#define TEMP_0_PIN         11   // Analog Input
+#define TEMP_0_PIN         11   // Analog Input (8)
 #define TEMP_1_PIN          9   // Analog Input
-#define TEMP_2_PIN          1   // Analog Input
+#define TEMP_2_PIN         -1   // Analog Input
 #define TEMP_BED_PIN       10   // Analog Input
 
 //
 // Heaters / Fans
 //
-#define HEATER_0_PIN       10
+#define HEATER_0_PIN       10   //2
 #define HEATER_1_PIN        3
-#define HEATER_2_PIN        1
+#define HEATER_2_PIN       -1
 #define HEATER_BED_PIN      4
+
 #define FAN_PIN             9
 //#define FAN1_PIN            8
 //#define FAN2_PIN            7
@@ -120,7 +121,9 @@
 #define SDSS               53
 #define LED_PIN             6
 #define PS_ON_PIN          12
+#define KILL_PIN           -1
 #define SUICIDE_PIN        54   //PIN that has to be turned on right after start, to keep power flowing.
+#define SERVO0_PIN         11   //13 untested  3Dtouch
 
 #ifndef CASE_LIGHT_PIN
   //#define CASE_LIGHT_PIN 21
@@ -128,19 +131,77 @@
 #endif
 
 //
-// LCD Controller
+// SD
 //
-#define BEEPER_PIN         18
+#define SDSS               53
+#define SD_DETECT_PIN      38
+#define SDPOWER            -1
 
-#define LCD_PINS_RS        20
-#define LCD_PINS_ENABLE    17
-#define LCD_PINS_D4        16
-#define LCD_PINS_D5        21
-#define LCD_PINS_D6         5
-#define LCD_PINS_D7        36
 
-#if ENABLED(NEWPANEL)
-  #define BTN_EN1          42
-  #define BTN_EN2          40
+//
+// LCD / Controller
+//
+#if ENABLED(ULTRA_LCD)
+#if ENABLED(REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER)
+  #define BEEPER_PIN         18
+
+  #define LCD_PINS_RS         5
+  #define LCD_PINS_ENABLE    36
+  #define LCD_PINS_D4        21
+  #define LCD_PINS_D5        21
+  #define LCD_PINS_D6         5
+  #define LCD_PINS_D7         6
+
+  // buttons are directly attached
+  #define BTN_EN1          16
+  #define BTN_EN2          17
   #define BTN_ENC          19
-#endif
+
+  #define SD_DETECT_PIN 38
+
+#else
+  #define BEEPER_PIN         18
+
+  #if ENABLED(NEWPANEL)
+
+    #define LCD_PINS_RS        20
+    #define LCD_PINS_ENABLE    17
+    #define LCD_PINS_D4        16
+    #define LCD_PINS_D5        21
+    #define LCD_PINS_D6         5
+    #define LCD_PINS_D7        36
+
+    // buttons are directly attached
+    #define BTN_EN1          42
+    #define BTN_EN2          40
+    #define BTN_ENC          19
+
+    #define SD_DETECT_PIN 38
+
+  #else // !NEWPANEL - Old style panel with shift register
+
+    // buttons are attached to a shift register
+    #define SHIFT_CLK 38
+    #define SHIFT_LD 42
+    #define SHIFT_OUT 40
+    #define SHIFT_EN 17
+
+    #define LCD_PINS_RS 16
+    #define LCD_PINS_ENABLE 5
+    #define LCD_PINS_D4 6
+    #define LCD_PINS_D5 21
+    #define LCD_PINS_D6 20
+    #define LCD_PINS_D7 19
+
+    #define SD_DETECT_PIN -1
+
+  #endif // !NEWPANEL
+#endif // REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
+#endif // ULTRA_LCD
+
+//
+// M3/M4/M5 - Spindle/Laser Control
+//
+#define SPINDLE_LASER_PWM_PIN     9   // MUST BE HARDWARE PWM
+#define SPINDLE_LASER_ENABLE_PIN 10   // Pin should have a pullup!
+#define SPINDLE_DIR_PIN          11   // use the EXP3 PWM header
